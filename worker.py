@@ -439,12 +439,3 @@ class Actor:
         local_buffer = LocalBuffer(self.id, self.env.num_agents, self.env.map_size[0], obs)
         return obs, pos, local_buffer
 
-
-#%%
-import numpy as np
-a = np.random.randn(4)
-len(a)
-# np.argwhere(a>0)[:,1]
-
-
-# %%
