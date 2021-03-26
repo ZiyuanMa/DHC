@@ -56,16 +56,16 @@ prioritized_replay_beta=0.4
 
 # curriculum learning
 init_env_settings = (1, 10)
-max_num_agents = 12
+max_num_agents = 2
 max_map_lenght = 40
 pass_rate = 0.9
 
 # dqn network setting
 cnn_channel = 128
-hidden_dim = 128
+hidden_dim = 256
 
 # communication
-max_comm_agents = 5 # including agent itself, means one can at most communicate with (max_comm_agents-1) agents
+max_comm_agents = 3 # including agent itself, means one can at most communicate with (max_comm_agents-1) agents
 
 # communication block
 num_comm_layers = 2
@@ -74,4 +74,5 @@ num_comm_heads = 2
 
 test_seed = 0
 num_test_cases = 200
-test_env_settings = ((40, 4, 0.3), (40, 8, 0.3), (40, 16, 0.3), (40, 32, 0.3), (40, 64, 0.3)) # map length, number of agents, density
+test_env_settings = ((40, 4, 0.3), (40, 8, 0.3), (40, 16, 0.3), (40, 32, 0.3), (40, 64, 0.3),
+                    (80, 4, 0.3), (80, 8, 0.3), (80, 16, 0.3), (80, 32, 0.3), (80, 64, 0.3)) # map length, number of agents, density

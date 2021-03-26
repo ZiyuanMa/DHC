@@ -5,6 +5,27 @@ from torch.nn.utils.rnn import pack_padded_sequence
 from torch.cuda.amp import autocast
 import configs
 
+class ResBlock(nn.Module):
+    def __init__(self, channel):
+        super().__init__()
+
+        self.block1 = nn.Conv2d(channel, channel, 3, 1, 1)
+        self.block2 = nn.Conv2d(channel, channel, 3, 1, 1)
+
+    def forward(self, x):
+        identity = x
+
+        x = self.block1(x)
+        x = F.relu(x)
+
+        x = self.block2(x)
+
+        x += identity
+
+        x = F.relu(x)
+
+        return x
+
 class MultiHeadAttention(nn.Module):
     def __init__(self, input_dim, output_dim, num_heads):
         super().__init__()
@@ -46,7 +67,7 @@ class MultiHeadAttention(nn.Module):
         return output # output: [batch_size x num_agents x output_dim]
 
 class CommBlock(nn.Module):
-    def __init__(self, input_dim, output_dim=32, num_heads=configs.num_comm_heads, num_layers=configs.num_comm_layers):
+    def __init__(self, input_dim, output_dim=64, num_heads=configs.num_comm_heads, num_layers=configs.num_comm_layers):
         super().__init__()
         self.input_dim = input_dim
         self.output_dim = output_dim
@@ -100,22 +121,22 @@ class Network(nn.Module):
         super().__init__()
 
         self.input_shape = input_shape
-        self.latent_dim = cnn_channel
+        self.latent_dim = 16*7*7
         self.hidden_dim = hidden_dim
         self.max_comm_agents = max_comm_agents
 
         self.obs_encoder = nn.Sequential(
             nn.Conv2d(self.input_shape[0], cnn_channel, 3, 1),
-            nn.LeakyReLU(0.2, True),
+            nn.ReLU(True),
 
-            nn.Conv2d(cnn_channel, cnn_channel, 3, 1),
-            nn.LeakyReLU(0.2, True),
+            ResBlock(cnn_channel),
 
-            nn.Conv2d(cnn_channel, cnn_channel, 3, 1),
-            nn.LeakyReLU(0.2, True),
+            ResBlock(cnn_channel),
 
-            nn.Conv2d(cnn_channel, cnn_channel, 3, 1),
-            nn.LeakyReLU(0.2, True),
+            ResBlock(cnn_channel),
+
+            nn.Conv2d(cnn_channel, 16, 1, 1),
+            nn.ReLU(True),
 
             nn.Flatten(),
         )
