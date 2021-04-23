@@ -1,2 +1,5 @@
 # DHC
-Distributed Heuristic Multi-Agent Path Finding with Communication
+
+Distributed reinforcement learning with communication for decentralized multi-agent pathfinding.
+
+

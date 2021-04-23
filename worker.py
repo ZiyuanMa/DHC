@@ -156,16 +156,12 @@ class GlobalBuffer:
                     done = False
                 
                 b_obs.append(obs)
-
                 b_action.append(action)
                 b_reward.append(reward)
-
                 b_done.append(done)
                 b_steps.append(steps)
                 b_seq_len.append(seq_len)
-
                 b_hidden.append(hidden)
-
                 b_comm_mask.append(comm_mask)
 
             # importance sampling weight
@@ -174,14 +170,11 @@ class GlobalBuffer:
 
             data = (
                 torch.from_numpy(np.stack(b_obs).astype(np.float16)),
-
                 torch.LongTensor(b_action).unsqueeze(1),
                 torch.HalfTensor(b_reward).unsqueeze(1),
-
                 torch.HalfTensor(b_done).unsqueeze(1),
                 torch.HalfTensor(b_steps).unsqueeze(1),
                 torch.LongTensor(b_seq_len),
-
                 torch.from_numpy(np.concatenate(b_hidden)),
                 torch.from_numpy(np.stack(b_comm_mask)),
 
@@ -397,7 +390,7 @@ class Actor:
             actions, q_val, hidden, comm_mask = self.model.step(torch.from_numpy(obs.astype(np.float32)), torch.from_numpy(pos.astype(np.float32)))
 
             if random.random() < self.epsilon:
-                # Note: only one agent can do random action in order to keep the environment stable
+                # Note: only one agent do random action in order to keep the environment stable
                 actions[0] = np.random.randint(0, 5)
             # take action in env
             (next_obs, next_pos), rewards, done, _ = self.env.step(actions)
