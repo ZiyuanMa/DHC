@@ -2,7 +2,7 @@ import time
 import random
 import os
 from copy import deepcopy
-from typing import List, Tuple
+from typing import Tuple
 import threading
 import ray
 import torch
@@ -395,7 +395,7 @@ class Actor:
             # take action in env
             (next_obs, next_pos), rewards, done, _ = self.env.step(actions)
             # return data and update observation
-            local_buffer.add(q_val[0], actions[0], rewards[0], next_obs[0], hidden, comm_mask)
+            local_buffer.add(q_val[0], actions[0], rewards[0], next_obs, hidden, comm_mask)
 
             if done == False and self.env.steps < self.max_episode_length:
                 obs, pos = next_obs, next_pos

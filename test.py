@@ -1,15 +1,11 @@
 '''create test set and test model'''
 import random
-import time
 import pickle
-import os
 import multiprocessing as mp
 from typing import Union
 from tqdm import tqdm
 import numpy as np
 import torch
-import matplotlib as mpl
-# mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from environment import Environment
