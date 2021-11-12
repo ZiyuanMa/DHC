@@ -449,7 +449,7 @@ class Environment:
             obs[i, 1] = obstacle_map[x:x+2*self.obs_radius+1, y:y+2*self.obs_radius+1]
             obs[i, 2:] = self.heuri_map[i, :, x:x+2*self.obs_radius+1, y:y+2*self.obs_radius+1]
 
-        obs = np.concatenate((obs, self.last_actions), axis=1)
+        # obs = np.concatenate((obs, self.last_actions), axis=1)
 
         return obs, np.copy(self.agents_pos)
     

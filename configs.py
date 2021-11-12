@@ -14,7 +14,7 @@ reward_fn = dict(move=-0.075,
                 collision=-0.5,
                 finish=3)
 
-obs_shape = (11, 2*obs_radius+1, 2*obs_radius+1)
+obs_shape = (6, 2*obs_radius+1, 2*obs_radius+1)
 action_dim = 5
 
 
